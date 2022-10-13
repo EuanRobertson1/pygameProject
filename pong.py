@@ -1,5 +1,6 @@
 from math import fabs
 from paddleClass import Paddle
+from ballClass import Ball
 import pygame
 pygame.init()
 
@@ -21,12 +22,18 @@ p2Paddle = Paddle(WHITE,10, 100)#new paddle object
 p2Paddle.rect.x = 670 #start pos x
 p2Paddle.rect.y = 200 #start pos y
 
+#create ball using ballClass
+ball = Ball(WHITE,10,10)
+
 #list of all sprites
 spritesList = pygame.sprite.Group()
 
 #add paddles to list
 spritesList.add(p1Paddle)
 spritesList.add(p2Paddle)
+
+#add ball to list
+spritesList.add(ball)
 
 #loop boolean
 keepRunning = True 
@@ -48,17 +55,30 @@ while keepRunning:
     #Moving paddles event handler
     keys = pygame.key.get_pressed()
     if keys[pygame.K_w]:
-        p1Paddle.moveUp(5)
+        p1Paddle.moveUp(6)
     if keys[pygame.K_s]:
-        p1Paddle.moveDown(5)
+        p1Paddle.moveDown(6)
     if keys[pygame.K_UP]:
-        p2Paddle.moveUp(5)
+        p2Paddle.moveUp(6)
     if keys[pygame.K_DOWN]:
-        p2Paddle.moveDown(5)
+        p2Paddle.moveDown(6)
     
     #Game logic goes here
     spritesList.update()
 
+    #check is ball is bouncing against any walls
+    if ball.rect.x>=690:
+        ball.velocity[0] = -ball.velocity[0]
+    if ball.rect.x<=0:
+        ball.velocity[0] = -ball.velocity[0]
+    if ball.rect.y>490:
+        ball.velocity[1] = -ball.velocity[1]
+    if ball.rect.y<0:
+        ball.velocity[1] = -ball.velocity[1]
+
+    #detect collision between ball and paddles
+    if pygame.sprite.collide_mask(ball,p1Paddle) or pygame.sprite.collide_mask(ball,p2Paddle):
+        ball.bounce()
 
     #Drawing code
     screen.fill(BLACK)#make the screen black
