@@ -37,13 +37,25 @@ gameClock = pygame.time.Clock()
 #-----main loop for game-----
 while keepRunning:
     #event loop
-    for event in pygame.get(): #user did something
+    for event in pygame.event.get(): #user did something
         if event.type == pygame.QUIT: #If use clicks close
             keepRunning = False #exit loop
         elif event.type==pygame.KEYDOWN:
             if event.key==pygame.K_x:
                 keepRunning=False
 
+
+    #Moving paddles event handler
+    keys = pygame.key.get_pressed()
+    if keys[pygame.K_w]:
+        p1Paddle.moveUp(5)
+    if keys[pygame.K_s]:
+        p1Paddle.moveDown(5)
+    if keys[pygame.K_UP]:
+        p2Paddle.moveUp(5)
+    if keys[pygame.K_DOWN]:
+        p2Paddle.moveDown(5)
+    
     #Game logic goes here
     spritesList.update()
 
@@ -53,6 +65,9 @@ while keepRunning:
    
     pygame.draw.line(screen, WHITE, [349, 0], [349, 500], 5)#draw white line in middle of screen
 
+    #draw sprites
+    spritesList.draw(screen)
+    
     pygame.display.flip()#update the screen with drawing
 
     #limit game to 60fps
