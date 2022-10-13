@@ -6,7 +6,7 @@ pygame.init()
 
 #colours used in game
 BLACK = (0,0,0)
-WHITE = (255,255,255)
+NEON = (57,255,20)
 
 #pygame window
 size = (700,500)
@@ -14,16 +14,16 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("PyPong")
 
 #create paddles using paddleClass
-p1Paddle = Paddle(WHITE,10, 100)#new paddle object
+p1Paddle = Paddle(NEON,10, 100)#new paddle object
 p1Paddle.rect.x = 20 #start pos x
 p1Paddle.rect.y = 200 #start pos y
 
-p2Paddle = Paddle(WHITE,10, 100)#new paddle object
+p2Paddle = Paddle(NEON,10, 100)#new paddle object
 p2Paddle.rect.x = 670 #start pos x
 p2Paddle.rect.y = 200 #start pos y
 
 #create ball using ballClass
-ball = Ball(WHITE,10,10)
+ball = Ball(NEON,10,10)
 
 #list of all sprites
 spritesList = pygame.sprite.Group()
@@ -83,7 +83,7 @@ while keepRunning:
     #Drawing code
     screen.fill(BLACK)#make the screen black
    
-    pygame.draw.line(screen, WHITE, [349, 0], [349, 500], 5)#draw white line in middle of screen
+    pygame.draw.line(screen, NEON, [349, 0], [349, 500], 5)#draw white line in middle of screen
 
     #draw sprites
     spritesList.draw(screen)
